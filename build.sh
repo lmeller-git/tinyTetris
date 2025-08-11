@@ -1,7 +1,7 @@
 #! /bin/bash
 
-echo "building example-rs in $(pwd)"
+echo "building tinyTetris in $(pwd)"
 
 cargo build --release
 
-echo "example-rs built"
+echo "tinyTetris built"

@@ -6,7 +6,7 @@ fn main() {
     let out_dir_path = Path::new(&out_dir);
 
     // TODO parse package/bin name from Cargo.toml
-    let bin_name = env::var("CARGO_BIN_NAME").unwrap_or("example-rs".into());
+    let bin_name = env::var("CARGO_BIN_NAME").unwrap_or("tinyTetris".into());
 
     let bin_dir = out_dir_path
         .parent()
