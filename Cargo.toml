@@ -7,8 +7,11 @@ edition = "2024"
 default = []
 
 [dependencies]
+conquer-once = { version = "0.4.0", default-features = false }
+thiserror = { version = "2.0.12", default-features = false }
 libtinyos = { git = "https://github.com/lmeller-git/libtinyos" }
 tinygraphics = { git = "https://github.com/lmeller-git/libtinyos" }
+spin = "0.10.0"
 
 [profile.dev]
 panic = "abort"
