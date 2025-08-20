@@ -198,7 +198,6 @@ impl GameState {
             lines.contains(&(((element.top_left().y - Y_ANCHOR) / GRANULE_SIZE) as usize))
         });
 
-        println!("lines: {lines:?}");
         let mut acc = Vec::with_capacity(lines.len());
 
         // drop lines down from highest to lowest line
@@ -207,7 +206,6 @@ impl GameState {
                 .settled_piece
                 .split_at_y(*line as i32 * GRANULE_SIZE + Y_ANCHOR)
             else {
-                eprintln!("nothing above");
                 continue;
             };
             for _ in 0..(lines.len() - i) {
@@ -658,7 +656,7 @@ impl ShapeBuilder {
     }
 
     fn t() -> Self {
-        let color = Rgb888::GREEN;
+        let color = Rgb888::MAGENTA;
 
         Self {
             inner: Shape::new(vec![
