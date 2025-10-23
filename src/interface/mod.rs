@@ -1,14 +1,15 @@
 use core::fmt::{Display, Write};
 
 use alloc::vec::Vec;
-use libtinyos::syscalls;
+use libtinyos::{eprintln, println, syscalls};
 
 pub fn query_keyboard_once(buf: &mut [u8]) -> Vec<KeyCode> {
     let res = unsafe { syscalls::read(syscalls::STDIN_FILENO, buf.as_mut_ptr(), buf.len(), 50) };
     if let Ok(res) = res {
         parse_ansi(&buf[..res as usize])
     } else {
-        Vec::default()
+        eprintln!("Syscall read failed.");
+        return Vec::new();
     }
 }
 

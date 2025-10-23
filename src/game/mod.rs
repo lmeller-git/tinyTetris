@@ -149,8 +149,8 @@ impl GameState {
     }
 
     fn validate(&mut self) {
-        // No need to redraw / flush currently, as we use the kernel fb via mmap
-        // Self::redraw();
+        // No need to flush currently, as we use the kernel fb via mmap
+        Self::redraw();
         if self
             .falling_piece
             .elements
