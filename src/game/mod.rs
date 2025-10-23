@@ -71,7 +71,7 @@ impl GameState {
         let first = ShapeBuilder::long().build();
         first.draw();
 
-        graphics().inner().flush().unwrap();
+        // graphics().inner().flush().unwrap();
 
         Self {
             score: 0,
@@ -149,7 +149,8 @@ impl GameState {
     }
 
     fn validate(&mut self) {
-        Self::redraw();
+        // No need to redraw / flush currently, as we use the kernel fb via mmap
+        // Self::redraw();
         if self
             .falling_piece
             .elements
@@ -162,7 +163,7 @@ impl GameState {
         self.settled_piece.draw();
         self.falling_piece.draw();
 
-        graphics().inner().flush().unwrap();
+        // graphics().inner().flush().unwrap();
     }
 
     fn handle_collision(&mut self) {

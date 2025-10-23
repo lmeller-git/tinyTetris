@@ -3,7 +3,7 @@
 
 extern crate alloc;
 
-use libtinyos::{exit, println};
+use libtinyos::{println, syscalls};
 
 use crate::{game::game_loop, graphics::init_gfx};
 
@@ -17,5 +17,7 @@ pub extern "C" fn main() -> ! {
     init_gfx();
     game_loop();
     #[allow(unreachable_code)]
-    exit(0);
+    unsafe {
+        syscalls::exit(0);
+    }
 }

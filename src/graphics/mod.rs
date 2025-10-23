@@ -1,13 +1,13 @@
 use conquer_once::spin::OnceCell;
 use spin::{Mutex, MutexGuard};
 use tinygraphics::{
-    backend::{PrimitiveDrawer, RawFrameBuffer},
+    backend::{KernelFBWrapper, PrimitiveDrawer},
     pixelcolor::Rgb888,
 };
 
 static GRAPHICS: OnceCell<GraphicsHandler<'static>> = OnceCell::uninit();
 
-type Backend<'a> = PrimitiveDrawer<'a, RawFrameBuffer, Rgb888>;
+type Backend<'a> = PrimitiveDrawer<'a, KernelFBWrapper, Rgb888>;
 
 pub fn init_gfx() {
     GRAPHICS.init_once(GraphicsHandler::new);
