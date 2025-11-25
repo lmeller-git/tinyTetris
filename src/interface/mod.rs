@@ -4,6 +4,7 @@ use alloc::vec::Vec;
 use libtinyos::{eprintln, println, syscalls};
 
 pub fn query_keyboard_once(buf: &mut [u8]) -> Vec<KeyCode> {
+    unsafe { syscalls::seek(syscalls::STDIN_FILENO, 0) }.unwrap();
     let res = unsafe { syscalls::read(syscalls::STDIN_FILENO, buf.as_mut_ptr(), buf.len(), 50) };
     if let Ok(res) = res {
         parse_ansi(&buf[..res as usize])
