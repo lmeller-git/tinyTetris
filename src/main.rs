@@ -12,12 +12,8 @@ mod graphics;
 mod interface;
 
 #[unsafe(no_mangle)]
-pub extern "C" fn main() -> ! {
+pub fn main() {
     println!("Welcome to TinyTetris.\nLaunching the game...");
     init_gfx();
     game_loop();
-    #[allow(unreachable_code)]
-    unsafe {
-        syscalls::exit(0);
-    }
 }
