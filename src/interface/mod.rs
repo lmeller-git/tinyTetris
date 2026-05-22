@@ -1,7 +1,7 @@
 use core::fmt::{Display, Write};
 
 use alloc::vec::Vec;
-use libtinyos::{eprintln, println, syscalls};
+use libtinyos::{eprintln, syscalls};
 
 pub fn query_keyboard_once(buf: &mut [u8]) -> Vec<KeyCode> {
     unsafe { syscalls::seek(syscalls::STDIN_FILENO, 0) }.unwrap();
@@ -10,7 +10,7 @@ pub fn query_keyboard_once(buf: &mut [u8]) -> Vec<KeyCode> {
         parse_ansi(&buf[..res as usize])
     } else {
         eprintln!("Syscall read failed.");
-        return Vec::new();
+        Vec::new()
     }
 }
 
@@ -41,32 +41,29 @@ fn parse_escaped(buf: &[u8], cursor: &mut usize) -> KeyCode {
             *cursor += 1;
             KeyCode::Esc
         }
-        Some(byte) => {
-            if *byte == b'[' {
-                match buf.get(*cursor + 2) {
-                    None => {
-                        *cursor += 1;
-                        KeyCode::Esc
-                    }
-                    Some(byte) => {
-                        *cursor += 3;
-
-                        match byte {
-                            b'A' => KeyCode::ArrowUp,
-                            b'D' => KeyCode::ArrowLeft,
-                            b'B' => KeyCode::ArrowDown,
-                            b'C' => KeyCode::ArrowRight,
-                            _ => {
-                                *cursor -= 2;
-                                KeyCode::Esc
-                            }
-                        }
-                    }
-                }
-            } else {
+        Some(byte) if *byte == b'[' => match buf.get(*cursor + 2) {
+            None => {
                 *cursor += 1;
                 KeyCode::Esc
             }
+            Some(byte) => {
+                *cursor += 3;
+
+                match byte {
+                    b'A' => KeyCode::ArrowUp,
+                    b'D' => KeyCode::ArrowLeft,
+                    b'B' => KeyCode::ArrowDown,
+                    b'C' => KeyCode::ArrowRight,
+                    _ => {
+                        *cursor -= 2;
+                        KeyCode::Esc
+                    }
+                }
+            }
+        },
+        _ => {
+            *cursor += 1;
+            KeyCode::Esc
         }
     }
 }

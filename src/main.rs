@@ -3,7 +3,7 @@
 
 extern crate alloc;
 
-use libtinyos::{println, syscalls};
+use libtinyos::{println, process::ProcessError};
 
 use crate::{game::game_loop, graphics::init_gfx};
 
@@ -12,8 +12,9 @@ mod graphics;
 mod interface;
 
 #[unsafe(no_mangle)]
-pub fn main() {
+pub fn main() -> Result<(), ProcessError> {
     println!("Welcome to TinyTetris.\nLaunching the game...");
     init_gfx();
     game_loop();
+    Ok(())
 }
